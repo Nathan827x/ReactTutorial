@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { compose } from "recompose";
 
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
-import { isExpressionWrapper } from "@babel/types";
 
 const SignUpPage = () => (
   <div>
@@ -88,7 +88,7 @@ class SignUpFormBase extends Component {
         />
 
         <button type="submit" disabled={isInvalid}>
-          Sing Up
+          Sign Up
         </button>
 
         {error && <p>{error.message}</p>}
@@ -102,7 +102,10 @@ const SignUpLink = () => (
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+const SignUpForm = compose(
+  withRouter,
+  withFirebase
+)(SignUpFormBase);
 
 export default SignUpPage;
 
